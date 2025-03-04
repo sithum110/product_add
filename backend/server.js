@@ -46,7 +46,7 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 app.use(express.json());  // To parse incoming JSON
 app.use(cors({
-  origin: 'https://product-add-tau.vercel.app/', // ✅ Replace with your frontend Vercel URL
+  origin: 'https://product-add-tau.vercel.app', // ✅ Replace with your frontend Vercel URL
   credentials: true // Allow cookies, authorization headers, etc.
 }));
 
