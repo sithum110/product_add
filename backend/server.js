@@ -43,12 +43,25 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Middleware
-app.use(express.json());  // To parse incoming JSON
+// CORS Configuration
+const allowedOrigins = [
+  'https://product-add-tau.vercel.app',  // Old frontend URL
+  'https://product-q6rmhenil-sithums-projects-1863f09e.vercel.app',  // New frontend URL
+];
+
 app.use(cors({
-  origin: 'https://product-add-tau.vercel.app', // ✅ Replace with your frontend Vercel URL
-  credentials: true // Allow cookies, authorization headers, etc.
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {  // Allows requests with no origin (like from Postman)
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow cookies, authorization headers, etc.
 }));
+
+// Middleware to parse incoming JSON
+app.use(express.json());
 
 // API Routes
 app.use('/api/products', productRoutes);
